@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banco Pichincha | Móvil</title>
+    <meta name="description" content="Gestiona tus finanzas con la app móvil de Banco Pichincha.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Login Screen -->
+    <div id="login-screen" class="login-screen">
+        <div class="login-container">
+            <div class="login-header">
+                <div class="login-logo">
+                    <div class="login-logo-icon">
+                        <i class="fa-solid fa-building-columns"></i>
+                    </div>
+                    <h1>Banco Pichincha</h1>
+                    <p>Banca Móvil</p>
+                </div>
+            </div>
+            <div class="login-form-area">
+                <h2>Iniciar Sesión</h2>
+                <form id="login-form">
+                    <div class="login-field">
+                        <label for="login-user"><i class="fa-solid fa-user"></i> Usuario</label>
+                        <input type="text" id="login-user" placeholder="Ingresa tu usuario" autocomplete="username"
+                            required>
+                    </div>
+                    <div class="login-field">
+                        <label for="login-pass"><i class="fa-solid fa-lock"></i> Contraseña</label>
+                        <input type="password" id="login-pass" placeholder="Ingresa tu contraseña"
+                            autocomplete="current-password" required>
+                    </div>
+                    <div id="login-error" class="login-error"></div>
+                    <button type="submit" class="login-btn" id="login-btn">Ingresar</button>
+                </form>
+                <div class="login-footer">
+                    <p>¿Olvidaste tu contraseña?</p>
+                    <div class="login-credentials-hint">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <span>Usuario: <strong>alexis</strong> | Contraseña: <strong>1234</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-container" id="app-container" style="display: none;">
+        <!-- Screen: Home -->
+        <div id="screen-home" class="screen active">
+            <header class="app-header">
+                <div class="user-profile">
+                    <div class="user-info">
+                        <h2>Hola, Alexis</h2>
+                        <p>Última conexión: Hoy 10:15 AM</p>
+                    </div>
+                    <div class="profile-pic">AR</div>
+                </div>
+
+                <div class="balance-card">
+                    <div class="balance-label">Saldo Disponible Total</div>
+                    <div class="balance-amount balance-total">$ 1,245.50</div>
+                    <div class="balance-subtext">
+                        Cuenta Ahorros y Pibank
+                    </div>
+                </div>
+            </header>
+
+            <div class="screen-content">
+                <div class="quick-actions">
+                    <div class="action-item" data-screen="screen-transfer">
+                        <div class="action-icon"><i class="fa-solid fa-paper-plane"></i></div>
+                        <p>Transferir</p>
+                    </div>
+                    <div class="action-item" data-screen="screen-payments">
+                        <div class="action-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                        <p>Pagar</p>
+                    </div>
+                    <div class="action-item" data-screen="screen-recharges">
+                        <div class="action-icon"><i class="fa-solid fa-mobile-screen"></i></div>
+                        <p>Recargas</p>
+                    </div>
+                    <div class="action-item" data-screen="screen-more">
+                        <div class="action-icon"><i class="fa-solid fa-ellipsis"></i></div>
+                        <p>Más</p>
+                    </div>
+                </div>
+
+                <div class="section-title">
+                    <h3>Mis Cuentas</h3>
+                    <span>Ver todas</span>
+                </div>
+
+                <div class="accounts-list">
+                    <div class="account-card clickable" data-screen="screen-acc-savings">
+                        <div class="acc-info">
+                            <h4>Ahorros Flexible</h4>
+                            <p>**** 4521</p>
+                        </div>
+                        <div class="acc-balance">
+                            <h5 class="balance-savings">$ 850.25</h5>
+                            <p>Disponible</p>
+                        </div>
+                    </div>
+
+                    <div class="account-card clickable" data-screen="screen-acc-pibank">
+                        <div class="acc-info">
+                            <h4>Pibank Digital</h4>
+                            <p>**** 1010</p>
+                        </div>
+                        <div class="acc-balance">
+                            <h5 class="balance-pibank">$ 395.25</h5>
+                            <p>Saldo Real</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="deuna-banner" data-screen="screen-qr">
+                    <div class="deuna-logo">Deuna!</div>
+                    <div class="deuna-content">
+                        <p class="font-bold">Pagos con QR</p>
+                        <p class="small-muted">Escanea y paga al instante</p>
+                    </div>
+                    <i class="fa-solid fa-chevron-right ms-auto"></i>
+                </div>
+
+                <div class="mt-4">
+                    <button class="btn-cta w-full" id="open-account-btn">Abrir Cuenta Nueva</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen: Transfer -->
+        <div id="screen-transfer" class="screen">
+            <header class="app-header-mini">
+                <i class="fa-solid fa-arrow-left back-btn"></i>
+                <h2>Transferir dinero</h2>
+            </header>
+            <div class="screen-content">
+                <div class="search-bar">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Buscar contacto o cuenta">
+                </div>
+                <div class="section-title">
+                    <h3>Contactos recientes</h3>
+                    <button class="add-button clickable" id="go-to-add-contact"><i class="fa-solid fa-plus"></i>
+                        Nuevo</button>
+                </div>
+                <div class="contacts-list" id="contacts-list-container">
+                    <div class="contact-item clickable-contact" data-target="Maria Andrade" data-acc="****4521">
+                        <div class="contact-avatar">MA</div>
+                        <div class="contact-info">
+                            <h4>Maria Andrade</h4>
+                            <p>Pichincha • ****4521</p>
+                        </div>
+                    </div>
+                    <div class="contact-item clickable-contact" data-target="Juan Silva" data-acc="****8821">
+                        <div class="contact-avatar">JS</div>
+                        <div class="contact-info">
+                            <h4>Juan Silva</h4>
+                            <p>Produbanco • ****8821</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen: Add Contact -->
+        <div id="screen-add-contact" class="screen">
+            <header class="app-header-mini">
+                <i class="fa-solid fa-arrow-left back-btn"></i>
+                <h2>Nuevo Contacto</h2>
+            </header>
+            <div class="screen-content">
+                <p class="mb-4 small-muted" style="text-align: center;">Agrega un contacto para realizar transferencias
+                    más rápido y de forma segura.</p>
+                <form id="add-contact-form">
+                    <div class="form-group mb-4">
+                        <label for="contact-name"
+                            style="font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 0.5rem; font-size: 0.85rem;">Nombre
+                            o Alias</label>
+                        <input type="text" id="contact-name" placeholder="Ej. Juan Pérez" required>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="contact-bank"
+                            style="font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 0.5rem; font-size: 0.85rem;">Banco</label>
+                        <select id="contact-bank" class="custom-select" required>
+                            <option value="" disabled selected>Selecciona un banco</option>
+                            <option value="Pichincha">Banco Pichincha</option>
+                            <option value="Guayaquil">Banco de Guayaquil</option>
+                            <option value="Pacifico">Banco del Pacífico</option>
+                            <option value="Produbanco">Produbanco</option>
+                            <option value="Bolivariano">Banco Bolivariano</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="contact-account"
+                            style="font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 0.5rem; font-size: 0.85rem;">Número
+                            de Cuenta</label>
+                        <input type="text" id="contact-account" placeholder="Ej: 2200000000" pattern="[0-9]{8,20}"
+                            title="Debe contener entre 8 y 20 dígitos" required>
+                    </div>
+                    <div class="mt-4">
+                        <button type="submit" class="btn-cta w-full flex-center"><i class="fa-solid fa-user-plus"
+                                style="margin-right: 0.5rem;"></i> Guardar Contacto</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Screen: Payments -->
+        <div id="screen-payments" class="screen">
+            <header class="app-header-mini">
+                <i class="fa-solid fa-arrow-left back-btn"></i>
+                <h2>Pagos de servicios</h2>
+            </header>
+            <div class="screen-content">
+                <div class="payments-grid">
+                    <div class="payment-card clickable-feature" data-name="Luz"><i class="fa-solid fa-lightbulb"></i>
+                        <p>Luz</p>
+                    </div>
+                    <div class="payment-card clickable-feature" data-name="Agua"><i class="fa-solid fa-droplet"></i>
+                        <p>Agua</p>
+                    </div>
+                    <div class="payment-card clickable-feature" data-name="Teléfono"><i class="fa-solid fa-phone"></i>
+                        <p>Teléfono</p>
+                    </div>
+                    <div class="payment-card clickable-feature" data-name="Internet"><i class="fa-solid fa-wifi"></i>
+                        <p>Internet</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen: Recharges -->
+        <div id="screen-recharges" class="screen">
+            <header class="app-header-mini">
+                <i class="fa-solid fa-arrow-left back-btn"></i>
+                <h2>Recargas de Celular</h2>
+            </header>
+            <div class="screen-content">
+                <div class="section-title">
+                    <h3>Elige tu operadora</h3>
+                </div>
+                <div class="recharges-grid">
+                    <div class="recharge-operator clickable-feature" data-name="Claro" data-type="recharge">
+                        <div class="operator-logo claro"><i class="fa-solid fa-mobile-button"></i></div>
+                        <p>Claro</p>
+                    </div>
+                    <div class="recharge-operator clickable-feature" data-name="Movistar" data-type="recharge">
+                        <div class="operator-logo movistar"><i class="fa-solid fa-mobile-button"></i></div>
+                        <p>Movistar</p>
+                    </div>
+                    <div class="recharge-operator clickable-feature" data-name="CNT" data-type="recharge">
+                        <div class="operator-logo cnt"><i class="fa-solid fa-mobile-button"></i></div>
+                        <p>CNT</p>
+                    </div>
+                    <div class="recharge-operator clickable-feature" data-name="Tuenti" data-type="recharge">
+                        <div class="operator-logo tuenti"><i class="fa-solid fa-mobile-button"></i></div>
+                        <p>Tuenti</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen: QR/Deuna -->
+        <div id="screen-qr" class="screen">
+            <header class="app-header-mini header-deuna">
+                <i class="fa-solid fa-arrow-left back-btn"></i>
+                <h2 class="deuna-title">Deuna!</h2>
+            </header>
+            <div class="screen-content qr-scanner-view">
+                <div class="scanner-frame">
+                    <div class="scan-line"></div>
+                </div>
+                <p>Alinea el código QR para pagar</p>
+                <div class="qr-actions">
+                    <div class="action-item">
+                        <div class="action-icon"><i class="fa-solid fa-image"></i></div>
+                        <p>Galería</p>
+                    </div>
+                    <div class="action-item">
+                        <div class="action-icon"><i class="fa-solid fa-keyboard"></i></div>
+                        <p>Ingresar</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen: Account Details (Savings) -->
+        <div id="screen-acc-savings" class="screen">
+            <header class="app-header-mini">
+                <i class="fa-solid fa-arrow-left back-btn"></i>
+                <h2>Ahorros Flexible</h2>
+            </header>
+            <div class="screen-content">
+                <div class="balance-summary">
+                    <p>Saldo total</p>
+                    <h1 class="balance-savings">$ 850.25</h1>
+                </div>
+                <div class="section-title">
+                    <h3>Movimientos</h3>
+                </div>
+                <div class="movements-list" id="savings-movements">
+                    <div class="movement-item">
+                        <div class="mov-icon debit"><i class="fa-solid fa-cart-shopping"></i></div>
+                        <div class="mov-info">
+                            <h4>Supermaxi</h4>
+                            <p>Hoy 10:45 AM</p>
+                        </div>
+                        <div class="mov-amount">-$ 24.50</div>
+                    </div>
+                    <div class="movement-item">
+                        <div class="mov-icon credit"><i class="fa-solid fa-arrow-down"></i></div>
+                        <div class="mov-info">
+                            <h4>Depósito Nómina</h4>
+                            <p>Ayer 09:12 AM</p>
+                        </div>
+                        <div class="mov-amount">+$ 450.00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen: Account Details (Pibank) -->
+        <div id="screen-acc-pibank" class="screen">
+            <header class="app-header-mini">
+                <i class="fa-solid fa-arrow-left back-btn"></i>
+                <h2>Pibank Digital</h2>
+            </header>
+            <div class="screen-content">
+                <div class="balance-summary">
+                    <p>Saldo total</p>
+                    <h1 class="balance-pibank">$ 395.25</h1>
+                </div>
+                <div class="section-title">
+                    <h3>Movimientos Pibank</h3>
+                </div>
+                <div class="movements-list" id="pibank-movements">
+                    <div class="movement-item">
+                        <div class="mov-icon credit"><i class="fa-solid fa-percent"></i></div>
+                        <div class="mov-info">
+                            <h4>Intereses Ganados</h4>
+                            <p>Hoy 00:01 AM</p>
+                        </div>
+                        <div class="mov-amount">+$ 1.25</div>
+                    </div>
+                    <div class="movement-item">
+                        <div class="mov-icon debit"><i class="fa-solid fa-building-columns"></i></div>
+                        <div class="mov-info">
+                            <h4>Transferencia Saliente</h4>
+                            <p>15 Feb 2026</p>
+                        </div>
+                        <div class="mov-amount">-$ 50.00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen: Cards -->
+        <div id="screen-cards" class="screen">
+            <header class="app-header-mini">
+                <i class="fa-solid fa-arrow-left back-btn"></i>
+                <h2>Mis Tarjetas</h2>
+            </header>
+            <div class="screen-content">
+                <div class="card-container">
+                    <div class="card-flipper">
+                        <div class="physical-card debit card-front">
+                            <div class="card-chip"></div>
+                            <div class="card-logo">Pichincha</div>
+                            <div class="card-type">Débito</div>
+                            <div class="card-number">**** **** **** 4521</div>
+                            <div class="card-footer">
+                                <span>ALEXIS RIVERA</span>
+                                <span>10/27</span>
+                            </div>
+                        </div>
+                        <div class="physical-card debit card-back">
+                            <div class="card-magnetic-strip"></div>
+                            <div class="card-signature-area">
+                                <div class="card-signature">ALEXIS RIVERA</div>
+                                <div class="card-cvv">CVV: 327</div>
+                            </div>
+                            <div class="card-back-info">
+                                <p>Servicio al cliente: 1800-PICHINCHA</p>
+                                <p class="card-back-small">Esta tarjeta es propiedad del Banco Pichincha</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-title">
+                    <h3>Tarjetas de Crédito</h3>
+                </div>
+                <div class="card-container">
+                    <div class="card-flipper">
+                        <div class="physical-card credit card-front">
+                            <div class="card-chip"></div>
+                            <div class="card-logo">Visa</div>
+                            <div class="card-type">Signature</div>
+                            <div class="card-number">**** **** **** 8852</div>
+                            <div class="card-footer">
+                                <span>ALEXIS RIVERA</span>
+                                <span>05/29</span>
+                            </div>
+                        </div>
+                        <div class="physical-card credit card-back">
+                            <div class="card-magnetic-strip"></div>
+                            <div class="card-signature-area">
+                                <div class="card-signature">ALEXIS RIVERA</div>
+                                <div class="card-cvv">CVV: 591</div>
+                            </div>
+                            <div class="card-back-info">
+                                <p>Servicio al cliente: 1800-PICHINCHA</p>
+                                <p class="card-back-small">Esta tarjeta es propiedad del Banco Pichincha</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen: Movements (Global) -->
+        <div id="screen-movements" class="screen">
+            <header class="app-header-mini">
+                <i class="fa-solid fa-arrow-left back-btn"></i>
+                <h2>Movimientos</h2>
+            </header>
+            <div class="screen-content">
+                <div class="movement-filters">
+                    <div class="filter-tab active" data-filter="all">Todas</div>
+                    <div class="filter-tab" data-filter="savings">Ahorros</div>
+                    <div class="filter-tab" data-filter="pibank">Pibank</div>
+                </div>
+                <div class="search-bar">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="movement-search" placeholder="Buscar en mis movimientos">
+                </div>
+                <div class="section-title">
+                    <h3>Movimientos recientes</h3>
+                </div>
+                <div class="movements-list" id="global-movements">
+                    <div class="movement-item searchable" data-acc="savings">
+                        <div class="mov-icon debit"><i class="fa-solid fa-utensils"></i></div>
+                        <div class="mov-info">
+                            <h4>Restaurante ABC</h4>
+                            <p>Hoy 02:30 PM</p>
+                        </div>
+                        <div class="mov-amount">-$ 15.20</div>
+                    </div>
+                    <div class="movement-item searchable" data-acc="savings">
+                        <div class="mov-icon credit"><i class="fa-solid fa-money-bill-transfer"></i></div>
+                        <div class="mov-info">
+                            <h4>Transferencia Recibida</h4>
+                            <p>Ayer 04:15 PM</p>
+                        </div>
+                        <div class="mov-amount">+$ 120.00</div>
+                    </div>
+                    <div class="movement-item searchable" data-acc="pibank">
+                        <div class="mov-icon debit"><i class="fa-solid fa-gas-pump"></i></div>
+                        <div class="mov-info">
+                            <h4>Gasolinera Central</h4>
+                            <p>18 Feb 2026</p>
+                        </div>
+                        <div class="mov-amount">-$ 35.00</div>
+                    </div>
+                    <div class="movement-item searchable" data-acc="savings">
+                        <div class="mov-icon debit"><i class="fa-solid fa-cart-shopping"></i></div>
+                        <div class="mov-info">
+                            <h4>Mi Comisariato</h4>
+                            <p>15 Feb 2026</p>
+                        </div>
+                        <div class="mov-amount">-$ 42.10</div>
+                    </div>
+                    <div class="movement-item searchable" data-acc="pibank">
+                        <div class="mov-icon credit"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                        <div class="mov-info">
+                            <h4>Devolución Impuestos</h4>
+                            <p>12 Feb 2026</p>
+                        </div>
+                        <div class="mov-amount">+$ 85.00</div>
+                    </div>
+                    <div class="movement-item searchable" data-acc="savings">
+                        <div class="mov-icon debit"><i class="fa-solid fa-bus"></i></div>
+                        <div class="mov-info">
+                            <h4>Recarga de Tarjeta</h4>
+                            <p>10 Feb 2026</p>
+                        </div>
+                        <div class="mov-amount">-$ 5.00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen: Settings -->
+        <div id="screen-settings" class="screen">
+            <header class="app-header-mini">
+                <i class="fa-solid fa-arrow-left back-btn"></i>
+                <h2>Ajustes</h2>
+            </header>
+            <div class="screen-content">
+                <div class="settings-profile">
+                    <div class="profile-pic larger">AR</div>
+                    <h3>Alexis Rivera</h3>
+                    <p>alexis.rivera@ejemplo.com</p>
+                </div>
+                <div class="settings-list">
+                    <div class="setting-item clickable">
+                        <i class="fa-solid fa-user-shield"></i>
+                        <p>Seguridad y Privacidad</p>
+                        <i class="fa-solid fa-chevron-right ms-auto"></i>
+                    </div>
+                    <div class="setting-item clickable">
+                        <i class="fa-solid fa-bell"></i>
+                        <p>Notificaciones</p>
+                        <i class="fa-solid fa-chevron-right ms-auto"></i>
+                    </div>
+                    <div class="setting-item clickable">
+                        <i class="fa-solid fa-circle-question"></i>
+                        <p>Ayuda y Soporte</p>
+                        <i class="fa-solid fa-chevron-right ms-auto"></i>
+                    </div>
+                    <div class="setting-item logout clickable" id="logout-btn">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <p>Cerrar Sesión</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen: More -->
+        <div id="screen-more" class="screen">
+            <header class="app-header-mini">
+                <i class="fa-solid fa-arrow-left back-btn"></i>
+                <h2>Más Gestiones</h2>
+            </header>
+            <div class="screen-content">
+                <div class="more-grid">
+                    <div class="more-item clickable-feature" data-name="Ahorro">
+                        <div class="more-icon"><i class="fa-solid fa-piggy-bank"></i></div>
+                        <p>Ahorro Programado</p>
+                    </div>
+                    <div class="more-item clickable-feature" data-name="Préstamos">
+                        <div class="more-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                        <p>Préstamos</p>
+                    </div>
+                    <div class="more-item clickable-feature" data-name="Seguros">
+                        <div class="more-icon"><i class="fa-solid fa-umbrella"></i></div>
+                        <p>Seguros</p>
+                    </div>
+                    <div class="more-item clickable-feature" data-name="Impuestos">
+                        <div class="more-icon"><i class="fa-solid fa-building-columns"></i></div>
+                        <p>Impuestos</p>
+                    </div>
+                    <div class="more-item clickable" data-screen="screen-gifts-category">
+                        <div class="more-icon"><i class="fa-solid fa-gift"></i></div>
+                        <p>Transferir Regalo</p>
+                    </div>
+                    <a href="https://www.google.com/maps/search/cajeros+y+agencias+banco+pichincha" target="_blank"
+                        class="more-item" style="text-decoration: none; color: inherit; display: block;">
+                        <div class="more-icon"><i class="fa-solid fa-location-dot"></i></div>
+                        <p>Cajeros y Agencias</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen: Gifts Category -->
+        <div id="screen-gifts-category" class="screen">
+            <header class="app-header-mini">
+                <i class="fa-solid fa-arrow-left back-btn"></i>
+                <h2>Transferir Regalo</h2>
+            </header>
+            <div class="screen-content">
+                <div class="section-title">
+                    <h3>¿Qué motivo celebras?</h3>
+                </div>
+                <div class="gifts-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                    <div class="gift-category clickable" data-gift-cat="Navidad"
+                        style="background: var(--bg-white); padding: 1.5rem; border-radius: 20px; text-align: center; border: 1px solid var(--glass-border);">
+                        <div style="font-size: 2rem; color: #10b981; margin-bottom: 0.5rem;"><i
+                                class="fa-solid fa-sleigh"></i></div>
+                        <p style="font-weight: 700; color: var(--primary-blue);">Navidad</p>
+                    </div>
+                    <div class="gift-category clickable" data-gift-cat="Cumpleaños"
+                        style="background: var(--bg-white); padding: 1.5rem; border-radius: 20px; text-align: center; border: 1px solid var(--glass-border);">
+                        <div style="font-size: 2rem; color: #f59e0b; margin-bottom: 0.5rem;"><i
+                                class="fa-solid fa-cake-candles"></i></div>
+                        <p style="font-weight: 700; color: var(--primary-blue);">Cumpleaños</p>
+                    </div>
+                    <div class="gift-category clickable" data-gift-cat="Donación"
+                        style="background: var(--bg-white); padding: 1.5rem; border-radius: 20px; text-align: center; border: 1px solid var(--glass-border);">
+                        <div style="font-size: 2rem; color: #8b5cf6; margin-bottom: 0.5rem;"><i
+                                class="fa-solid fa-hand-holding-heart"></i></div>
+                        <p style="font-weight: 700; color: var(--primary-blue);">Donación</p>
+                    </div>
+                    <div class="gift-category clickable" data-gift-cat="Aniversario"
+                        style="background: var(--bg-white); padding: 1.5rem; border-radius: 20px; text-align: center; border: 1px solid var(--glass-border);">
+                        <div style="font-size: 2rem; color: #ef4444; margin-bottom: 0.5rem;"><i
+                                class="fa-solid fa-champagne-glasses"></i></div>
+                        <p style="font-weight: 700; color: var(--primary-blue);">Aniversario</p>
+                    </div>
+                    <div class="gift-category clickable" data-gift-cat="Día de la Madre"
+                        style="background: var(--bg-white); padding: 1.5rem; border-radius: 20px; text-align: center; border: 1px solid var(--glass-border);">
+                        <div style="font-size: 2rem; color: #ec4899; margin-bottom: 0.5rem;"><i
+                                class="fa-solid fa-person-breastfeeding"></i></div>
+                        <p style="font-weight: 700; color: var(--primary-blue);">Día de la Madre</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen: Gifts Postcards -->
+        <div id="screen-gifts-postcards" class="screen">
+            <header class="app-header-mini">
+                <i class="fa-solid fa-arrow-left clickable" id="btn-back-to-gift-categories"></i>
+                <h2>Elige una Postal</h2>
+            </header>
+            <div class="screen-content">
+                <div class="section-title">
+                    <h3 id="gift-cat-title">Postales de --</h3>
+                </div>
+                <div class="postcards-grid" id="postcards-container"
+                    style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <!-- Postcards generated via JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen: Gifts Details -->
+        <div id="screen-gifts-details" class="screen">
+            <header class="app-header-mini">
+                <i class="fa-solid fa-arrow-left clickable" id="btn-back-to-postcards"></i>
+                <h2>Detalles del Regalo</h2>
+            </header>
+            <div class="screen-content">
+                <div class="selected-postcard-preview" id="preview-postcard"
+                    style="width: 100%; height: 200px; border-radius: 20px; background-size: cover; background-position: center; margin-bottom: 1.5rem; box-shadow: var(--shadow-md);">
+                </div>
+                <form id="gift-details-form" class="mt-4">
+                    <div class="form-group mb-4">
+                        <label for="gift-title"
+                            style="font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 0.5rem; font-size: 0.85rem;">Título
+                            del regalo</label>
+                        <input type="text" id="gift-title" placeholder="Ej: Feliz Cumple!" required>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="gift-message"
+                            style="font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 0.5rem; font-size: 0.85rem;">Dedicatoria</label>
+                        <textarea id="gift-message" placeholder="Escribe un lindo mensaje..." rows="3"
+                            style="width: 100%; border: 2px solid transparent; background: #F0F4F8; padding: 1.25rem; border-radius: 16px; font-family: 'Inter', sans-serif; resize: none;"></textarea>
+                    </div>
+                    <div class="mt-4">
+                        <button type="submit" class="btn-cta w-full flex-center"><i class="fa-solid fa-address-book"
+                                style="margin-right: 0.5rem;"></i> Elegir Contacto</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Screen: Gifts Contact -->
+        <div id="screen-gifts-contact" class="screen">
+            <header class="app-header-mini">
+                <i class="fa-solid fa-arrow-left clickable" id="btn-back-to-gift-details"></i>
+                <h2>¿Para quién es?</h2>
+            </header>
+            <div class="screen-content">
+                <div class="section-title">
+                    <h3>Selecciona un contacto</h3>
+                </div>
+                <div class="contacts-list" id="gift-contacts-container">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <div class="nav-item active" data-screen="screen-home">
+                <i class="fa-solid fa-house"></i>
+                <span>Inicio</span>
+            </div>
+            <div class="nav-item" data-screen="screen-cards">
+                <i class="fa-solid fa-credit-card"></i>
+                <span>Tarjetas</span>
+            </div>
+            <div class="nav-item" data-screen="screen-movements">
+                <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                <span>Movimientos</span>
+            </div>
+            <div class="nav-item" data-screen="screen-settings">
+                <i class="fa-solid fa-gear"></i>
+                <span>Ajustes</span>
+            </div>
+        </nav>
+
+        <!-- Account Modal -->
+        <div id="account-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Nueva Cuenta Pichincha</h2>
+                    <p>Completa tus datos para empezar.</p>
+                </div>
+                <form id="signup-form" action="https://formspree.io/f/mqaeapzo" method="POST">
+                    <div class="form-group">
+                        <label for="name">Nombre</label>
+                        <input type="text" id="name" name="name" placeholder="Tu nombre completo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Correo</label>
+                        <input type="email" id="email" name="email" placeholder="tu@correo.com" required>
+                    </div>
+                    <button type="submit" class="btn-cta w-full">Solicitar Apertura</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transaction Modal -->
+    <div id="transaction-modal" class="modal">
+        <div class="modal-content transaction-flow">
+            <!-- Step 0: Account Selection -->
+            <div id="tx-step-account" class="tx-step active">
+                <div class="modal-header">
+                    <h2>Elige una cuenta</h2>
+                    <p>Selecciona el origen de los fondos</p>
+                </div>
+                <div class="accounts-selector">
+                    <div class="account-opt active" data-acc="savings">
+                        <div class="acc-opt-info">
+                            <h4>Ahorros Flexible</h4>
+                            <p class="balance-savings">$ 850.25</p>
+                        </div>
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <div class="account-opt" data-acc="pibank">
+                        <div class="acc-opt-info">
+                            <h4>Pibank Digital</h4>
+                            <p class="balance-pibank">$ 395.25</p>
+                        </div>
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                </div>
+                <div class="tx-actions">
+                    <button class="btn-cta w-full" id="next-to-amount">Continuar</button>
+                    <button class="btn-text w-full cancel-tx">Cancelar</button>
+                </div>
+            </div>
+
+            <!-- Step 1.5: Phone Number Entry (Only for Recharges) -->
+            <div id="tx-step-phone" class="tx-step">
+                <div class="modal-header">
+                    <div class="tx-header-layout">
+                        <i class="fa-solid fa-arrow-left tx-back clickable" data-prev="tx-step-account"></i>
+                        <h2 class="mb-0">¿A qué número?</h2>
+                    </div>
+                    <p id="tx-dest-operator">Operadora: --</p>
+                </div>
+                <div class="amount-container">
+                    <input type="tel" id="tx-phone-input" placeholder="099 999 9999" maxlength="10">
+                </div>
+                <div class="tx-actions">
+                    <button class="btn-cta w-full" id="next-to-amount-from-phone">Continuar</button>
+                    <button class="btn-text w-full cancel-tx">Cancelar</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Amount Entry -->
+            <div id="tx-step-amount" class="tx-step">
+                <div class="modal-header">
+                    <div class="tx-header-layout">
+                        <i class="fa-solid fa-arrow-left tx-back clickable" id="back-from-amount"></i>
+                        <h2 class="mb-0">¿Cuánto?</h2>
+                    </div>
+                    <p id="tx-dest-info">Para: Maria Andrade</p>
+                </div>
+                <div class="amount-container">
+                    <span class="currency">$</span>
+                    <input type="number" id="tx-amount-input" placeholder="0.00">
+                </div>
+                <div class="tx-actions">
+                    <button class="btn-cta w-full" id="confirm-tx-btn">Continuar</button>
+                    <button class="btn-text w-full cancel-tx">Cancelar</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Processing -->
+            <div id="tx-step-processing" class="tx-step">
+                <div class="processing-view">
+                    <div class="spinner"></div>
+                    <h3>Procesando...</h3>
+                    <p>Estamos validando tu transacción.</p>
+                </div>
+            </div>
+
+            <!-- Step 3: Success Receipt -->
+            <div id="tx-step-success" class="tx-step">
+                <div class="receipt">
+                    <div class="receipt-header">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <h2>¡Transacción Exitosa!</h2>
+                        <h1 id="receipt-amount">$0.00</h1>
+                    </div>
+                    <div class="receipt-body">
+                        <div class="receipt-row"><span>Estado</span><span class="status-tag">Realizado</span></div>
+                        <div class="receipt-row"><span>Fecha</span><span id="receipt-date">--/--/--</span></div>
+                        <div class="receipt-row"><span>Para</span><span id="receipt-dest">Nombre</span></div>
+                        <div class="receipt-row"><span>ID Operación</span><span id="receipt-id">#000000</span></div>
+
+                        <!-- Optional Gift Info -->
+                        <div id="receipt-gift-info"
+                            style="display: none; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px dashed #eee;">
+                            <div id="receipt-gift-img"
+                                style="width: 100%; height: 120px; border-radius: 12px; background-size: cover; background-position: center; margin-bottom: 1rem; box-shadow: var(--shadow-sm);">
+                            </div>
+                            <h4 id="receipt-gift-title"
+                                style="color: var(--primary-blue); font-weight: 800; text-align: center; margin-bottom: 0.5rem; font-size: 1.1rem;">
+                                --</h4>
+                            <p id="receipt-gift-message"
+                                style="color: var(--text-muted); text-align: center; font-style: italic; font-size: 0.9rem; line-height: 1.4;">
+                                --</p>
+                        </div>
+                    </div>
+                    <div class="receipt-footer">
+                        <button class="btn-cta w-full" id="finish-tx-btn">Finalizar</button>
+                        <button class="btn-outline w-full"><i class="fa-solid fa-share-nodes"></i> Compartir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
